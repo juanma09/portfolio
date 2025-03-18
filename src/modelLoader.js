@@ -113,7 +113,8 @@ export function loadModel(modelPath, scene, model)
         });
 
         mixers.push(mixer);
-    
+        
+        globalData.modelsReady = true;
         
         console.log(model);
         console.log(InteractableInstances);
@@ -125,7 +126,18 @@ export function loadModel(modelPath, scene, model)
         }, 2000);
         
         setClockHour();
-    }
+    }, 
+    function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+        console.warn(error)
+		console.log( 'An error happened' );
+
+	}
     );
 
 
@@ -146,6 +158,7 @@ function setNestedProperty(target, path, value) {
 
 export function updateInteractables()
 {
+    if (!globalData.modelsReady) return;
     InteractableInstances.forEach(item => {
         if (item.customData.tooltip)
         {

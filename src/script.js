@@ -34,7 +34,7 @@ const scene = new THREE.Scene()
 
 const model = {}
 
-loadModel('../private/roomportfolio.gltf', scene, model);
+loadModel('/roomportfolio.gltf', scene, model);
 
 mouse = new THREE.Vector2()
 raycaster = new THREE.Raycaster();
