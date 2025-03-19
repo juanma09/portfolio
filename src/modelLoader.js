@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { Interactable, Tooltip } from './interactable';
 
 import globalData from './globalData.js';
@@ -86,8 +87,9 @@ export function loadModel(modelPath, scene, model)
 {   
     const loading_screen = document.getElementById("loading-screen");
     
-
+ 
     const loader = new GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
     loader.load(
     modelPath,
     function (gltf) 
@@ -102,8 +104,8 @@ export function loadModel(modelPath, scene, model)
                     setNestedProperty(model, path, child);
                     ManageInteractables(child);
                 }
-        }
-    });
+            }
+        });
         console.log(model);
 
         gltf.animations.forEach((clip) => {
