@@ -939,3 +939,22 @@ nav .list {
 .swiper-pagination-bullet-active{
   background: #0A21C0;
 }
+
+#progressbar {
+  background-color: #B3B4BD;
+  border-radius: 2px;
+  /* (height of inner div) / 2 + padding */
+  padding: 2px;
+  z-index: 2;
+  position: absolute;
+  width: 30%;
+  bottom: 30%;  
+}
+
+#progressbar div {
+  background-color: #0A21C0;
+  width: 0%;
+  /* Adjust with JavaScript */
+  height: 5px;
+  border-radius: 10px;
+}

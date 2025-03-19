@@ -86,7 +86,7 @@ export function ManageInteractables(model)
 export function loadModel(modelPath, scene, model)
 {   
     const loading_screen = document.getElementById("loading-screen");
-    
+    const progress_bar = document.querySelector("#progressbar div");
  
     const loader = new GLTFLoader();
     loader.setMeshoptDecoder(MeshoptDecoder);
@@ -132,6 +132,7 @@ export function loadModel(modelPath, scene, model)
     function ( xhr ) {
 
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+        progress_bar.style.width = ( xhr.loaded / xhr.total * 100 ) + '%';
 
 	},
 	// called when loading has errors
