@@ -3,6 +3,11 @@
 body {
     margin: 0;
     overflow: -moz-hidden-unscrollable;
+    overflow: hidden;
+    background-color: #141619;
+    @media only screen and (max-device-width: 768px) {
+      font-size: 2rem;
+    }
   }
   
   #info {
@@ -186,6 +191,10 @@ body {
   justify-content: flex-start;
   position: absolute;
   z-index: 1;
+  @media only screen and (max-device-width: 768px) {
+    display: none;
+  }
+  
 }
 
 .item-hints .hint {
@@ -250,7 +259,7 @@ body {
 .item-hints .hint-content::before {
   width: 0px;
   bottom: 29px;
-  left: 0;
+  right: 0;
   content: "";
   background-color: #fff;
   height: 1px;
@@ -259,16 +268,16 @@ body {
 }
 
 .item-hints .hint.active .hint-content::before {
-  width: 180px;
+  width: 100px;
   transition: width 0.4s;
 }
 
 .item-hints .hint-content::after {
   transform-origin: 0 50%;
-  transform: rotate(-225deg);
+  transform:  translateX(100px) rotate(45deg);
   bottom: 29px;
   left: 0;
-  width: 80px;
+  width: 30px;
   content: "";
   background-color: #fff;
   height: 1px;
@@ -283,9 +292,9 @@ body {
 }
 
 .item-hints .hint[data-position="4"] .hint-content {
-  bottom: 50px;
-  left: 50%;
-  margin-left: 56px;
+  bottom: 0px;
+  right: calc(50% + 30px);
+  margin-left: 20px;
 }
 
 /* .project-card {
@@ -403,9 +412,11 @@ body {
   position: absolute;
   width: 40%;
   margin: 0px;
-  transition: all 0.5s ease;
-  @media (max-width: 800px) {
-    width: 80%;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  display: block;
+  @media only screen and (max-device-width: 768px) {
+    width: 90%;
+    height: auto;
   }
 }
 
@@ -414,6 +425,9 @@ body {
   transform: translateY(100%);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+  height: 0; /* Ensures it doesn’t take up space */
+  overflow: hidden; /* Hides any remaining content */
   /* Removed display: none; to allow transition */
 }
 
@@ -433,6 +447,11 @@ body {
   height: 40px;
   opacity: 0.6;
   transition: all 0.5s ease;
+
+  @media only screen and (max-device-width: 768px) {
+    width: 5vh;
+    height: 5vh;
+  }
 }
 
 .container .title img:hover{
@@ -453,6 +472,9 @@ body {
   margin-left: 20%;
   grid-template-columns: 40px 100%;
   margin-bottom: 20px;
+  @media only screen and (max-device-width: 768px){
+    grid-template-columns: 5vh 100%;
+  }
 }
 
 .container p
@@ -495,6 +517,10 @@ body {
   border: 2px solid #B3B4BD;
   padding: 4px;
   transition: all 1s ease;
+
+  @media only screen and (max-device-width: 768px) {
+    height: 35vh;
+  }
 }
 
 .card-list .card-item .user-image:hover{
@@ -507,6 +533,9 @@ body {
   color: #B3B4BD;
   font-weight: 500;
   margin: 14px 0 40px;
+  @media only screen and (max-device-width: 768px) {
+    font-size: 2rem;
+  }
 }
 
 
@@ -522,6 +551,17 @@ body {
   border: 1px solid transparent;
   transition: 0.2s ease;
   margin-bottom: 5px;
+
+  @media only screen and (max-device-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.card-list .card-item .user-name
+{
+  @media only screen and (max-device-width: 768px) {
+    font-size: 3rem;
+  }
 }
 
 .card-list .card-item .message-button:hover{
@@ -536,6 +576,11 @@ body {
   display: grid;
   grid-template-columns: 45% 45%;
   grid-gap: 10px;
+
+  @media only screen and (max-device-width: 768px) {
+    grid-template-columns: 90%;
+    grid-gap: 10px;
+  }
 }
 
 .skill-list .skill-item
@@ -549,8 +594,15 @@ body {
   backdrop-filter: blur(30px);
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.5);
-
   transition: all 0.3s ease;
+
+  
+  @media only screen and (max-device-width: 768px) {
+    height: 5vh;
+    grid-template-columns: 4vh 75%;
+
+  }
+
 }
 
 .skill-list .skill-item .skill-image{
@@ -561,6 +613,11 @@ body {
   margin-bottom: auto;
   margin-left: auto;
   transition: all 1s ease;
+
+  @media only screen and (max-device-width: 768px) {
+    width: 4vh;
+    height: 4vh;
+  }
 }
 
 .skill-list .skill-item .user-name{
@@ -569,6 +626,9 @@ body {
   margin-left: 5px;
   font-size: 25px;
   font-weight: 400;
+  @media only screen and (max-device-width: 768px) {
+    font-size: 2.5rem;
+  }
 }
 
 footer{
@@ -578,7 +638,10 @@ footer{
   display: flex;
   justify-content: space-between;
   color: white;
-  font-size: 12px;
+  font-size: 1rem;
+  @media only screen and (max-device-width: 768px) {
+    font-size: 1.2rem;
+  }
 }
 
 footer p{
@@ -621,7 +684,7 @@ nav {
     -webkit-mask-position: left bottom, top left;
   }
 
-  @media (max-width: 640px) {
+  @media only screen and (max-device-width: 768px) {
     padding: 16px 50px 30px 50px;
     width: 100%;
   }
@@ -641,9 +704,52 @@ nav a {
 nav .list {
   list-style-type: none;
   margin-left: auto;
+  display: flex;
+  @media only screen and (max-device-width: 768px) {
+    display: none;
+  }
+  li {
+    margin-left: 20px;
+  }
+}
+
+.nav-links{
+  display:flex;
+  color: #B3B4BD;
+  justify-content: center;
+  margin-top: 10%;
+  transform: translateY(0%);
+  z-index: 4;
+
+  transition: all 0.5s ease;
+}
+
+.nav-links.is-hidden
+{
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 3rem;
+  margin-top: 10px;
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.nav-links .list{
+  list-style-type: none;
   display: none;
-  @media (min-width: 640px) {
-    display: flex;
+  background-color: #141619;
+  width: 95%;
+  @media only screen and (max-device-width: 768px) {
+    display: block;
+    text-align: center;
   }
   li {
     margin-left: 20px;
@@ -651,24 +757,26 @@ nav .list {
 }
 
 .menu {
-  display: inline-block;
+  display: none;
   padding: 0;
   font-size: 0;
   background: none;
   border:  none;
   margin-left: auto;
+  margin-right: 40px;
   filter: drop-shadow(0 0 5px rgba(0,0,0,.5));
   &::before {
-    content: url("data:image/svg+xml, %3Csvg%20xmlns=%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox=%270%200%2024.8%2018.92%27%20width=%2724.8%27%20height=%2718.92%27%3E%3Cpath%20d=%27M23.8,9.46H1m22.8,8.46H1M23.8,1H1%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-linecap=%27round%27%20stroke-width=%272%27%2F%3E%3C%2Fsvg%3E")
+    content: url("data:image/svg+xml, %3Csvg%20xmlns=%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox=%270%200%2024.8%2018.92%27%20width=%2735%27%20height=%2730.92%27%3E%3Cpath%20d=%27M23.8,9.46H1m22.8,8.46H1M23.8,1H1%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-linecap=%27round%27%20stroke-width=%273%27%2F%3E%3C%2Fsvg%3E")
   }
-  @media (min-width: 640px) {
-    display: none;
+  @media only screen and (max-device-width: 768px) {
+    display: inline-block;
   }
 }
 
 
 .social-card svg {
   height: 25px;
+
 }
 
 .social-card {
@@ -683,8 +791,8 @@ nav .list {
   height: 50px;
   margin-bottom: 20px;
   margin-right: 10px;
-  @media (max-width: 900px) {
-  
+  @media only screen and (max-device-width: 768px) {
+    height: 5vh;
     width: 100%;
   }
 }
@@ -746,6 +854,11 @@ nav .list {
   opacity: 1;
   transition: opacity 0.25s;
   z-index: 2;
+
+  @media only screen and (max-device-width: 768px) 
+  {
+    font-size: 2rem;
+  }
 }
 
 .social-card .social-link {
@@ -759,11 +872,17 @@ nav .list {
   font-size: 24px;
   text-decoration: none;
   transition: 0.25s;
+
+
 }
 
 .social-card .social-link svg {
   text-shadow: 1px 1px rgba(31, 74, 121, 0.7);
   transform: scale(1);
+  @media only screen and (max-device-width: 768px) 
+  {
+    transform: scale(2);
+  }
 }
 
 .social-card .social-link:hover {
@@ -801,8 +920,8 @@ nav .list {
   height: 50px;
   width: 15vw;
  
-  @media (max-width: 900px) {
-  
+  @media only screen and (max-device-width: 768px)  {
+    height: 5vh;
     width: 100%;
   }
 }
@@ -864,6 +983,11 @@ nav .list {
   opacity: 1;
   transition: opacity 0.25s;
   z-index: 2;
+
+  @media only screen and (max-device-width: 768px) 
+  {
+    font-size: 2rem;
+  }
 }
 
 .email-card .email-link {
@@ -879,12 +1003,18 @@ nav .list {
   text-decoration: none;
   transform: scale(1);
   transition: 0.25s;
+  @media only screen and (max-device-width: 768px) 
+  {
+
+    font-size: 2rem;
+  }
 }
 
 .email-card .email-link svg {
   text-shadow: 1px 1px rgba(31, 74, 121, 0.7);
   transform: scale(.8);
 }
+
 
 .email-card .email-link:hover {
   background-color: rgba(249, 244, 255, 0.774);
@@ -894,12 +1024,21 @@ nav .list {
 #About
 {
   top: 40%;
+  @media only screen and (max-device-width: 768px) 
+  {
+    top: 25%;
+  }
 }
 
 #About h1
 {
   color: white;
   font-size: 4rem;
+  @media only screen and (max-device-width: 768px) 
+  {
+    font-size: 6rem;
+  }
+  
 }
 
 #About h3
@@ -909,6 +1048,10 @@ nav .list {
   font-weight: 200;
   margin-top: 10px;
   margin-bottom: 5px;
+  @media only screen and (max-device-width: 768px) 
+  {
+    font-size: 4rem;
+  }
 }
 
 #About h4
@@ -917,6 +1060,10 @@ nav .list {
   font-weight: 200;
   font-size: 1.2rem;
   margin-bottom: 30px;
+  @media only screen and (max-device-width: 768px) 
+  {
+    font-size: 2.5rem;
+  }
 }
 
 #About .contacts{
@@ -924,9 +1071,10 @@ nav .list {
     width: 75%;
     grid-template-columns: 50% 50%;
     
-    @media (max-width: 900px) {
+    @media only screen and (max-device-width: 768px)  {
       width: 100%;
-      grid-template-columns: 100%;
+      grid-template-columns: 70%;
+      
       
     }
 }
@@ -958,3 +1106,36 @@ nav .list {
   height: 5px;
   border-radius: 10px;
 }
+
+
+/*#Credits
+{
+  
+}*/
+
+#Credits .card-item {
+  width: 95%;
+
+}
+
+#Credits .card-item  a{
+  color: inherit;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+#Credits .card-item.models{
+  align-items: start;
+}
+
+
+#main-canvas
+{
+  @media only screen and (max-device-width: 768px) {
+    display: none;
+  }
+}
+

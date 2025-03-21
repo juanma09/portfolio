@@ -29,10 +29,19 @@
 			  <li><a href="#" onclick="showContainer('About')">About</a></li>
 			  <li><a href="#" onclick="showContainer('Projects')">Projects</a></li>
 			  <li><a href="#" onclick="showContainer('Skills')">Skills</a></li>
-			  <li><a href="#"></a></li>
+			  <li><a href="#" onclick="showContainer('Credits')">Credits</a></li>
 			</ul>
 			<button class="menu">Menu</button>
 		  </nav>
+
+		<div class="nav-links is-hidden">
+			<ul class="list">
+				<li><a href="#" onclick="showContainer('About')">About</a></li>
+				<li><a href="#" onclick="showContainer('Projects')">Projects</a></li>
+				<li><a href="#" onclick="showContainer('Skills')">Skills</a></li>
+				<li><a href="#" onclick="showContainer('Credits')">Credits</a></li>
+			  </ul>
+		</div>
 
 		<div id="info"></div>
 		<div class="item-hints">
@@ -177,15 +186,41 @@
 			</div>
 		</div>
 		
+		<div id="Credits" class="container inactive">
+			<div class="title">
+				<img src="/cross.svg" alt="close" onclick="showContainer('About')">
+				<h1>Credits</h1>
+			</div>
+			<div class="card-list">
+				<div class="card-item models">
+					<h3>Models</h3>
+					<h4><a href="https://skfb.ly/oLEwV">"Low Poly-F1"</a>  by salasilma13.</h4>
+					<h4><a href="https://skfb.ly/ozonx">"electric piano lowpoly"</a> by berti_buchsbaum.</h4>
+					<h4><a href="https://skfb.ly/6vZp6">"Taipei 101"</a> by Romain PERRONE.</h4>
+					
+					<br><br>
+
+					<h3>Inspired by:</h3>
+					<h4>Bruno Simon</h4>
+					<h4>Jesse Zhou</h4>
+					<h4>David Heckhoff</h4>
+					
+					<br><br>
+
+					<h4>
+						Icons by <a href="https://icons8.com/" target="_blank">Icons8</a>
+					</h4>
+					
+				</div>
+			</div>
+		</div>
 
         <canvas class="threejs" id="main-canvas"></canvas>
 		<footer>
 			<p>
 				A Website by Mateo Elizeche.
 			</p>
-			<p>
-				Icons by <a href="https://icons8.com/" target="_blank">Icons8</a>
-			</p>
+			
 		</footer>
 
 		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

@@ -13,6 +13,16 @@ export const InteractableInstances = [
     new Interactable("Clock", null, function() { projectTextbox(this)}, null, false)
 ];
 
+export function deleteTooltips()
+{
+    InteractableInstances.forEach(item => {
+        if (item.customData.tooltip)
+        {
+            item.customData.tooltip.delete();
+        }
+    })
+}
+
 function showOutline(model)
 {
     globalData.outlinePass.selectedObjects = [model]
@@ -36,6 +46,8 @@ export function showContainer(elId){
     if (cont)
         document.getElementById(elId).classList.remove('inactive');
     console.log(cont);
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.add('is-hidden');
 }
 
 function hideContainers()
@@ -171,3 +183,20 @@ export function updateInteractables()
     });
 }
 
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('is-hidden');
+      console.log("HIDING");
+    }
+  
+    // You can also attach the event listener here, if you prefer
+    const menuButton = document.querySelector('.menu');
+    if (menuButton) {
+      menuButton.addEventListener('click', toggleMenu);
+    }
+  });
+  

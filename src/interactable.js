@@ -122,4 +122,12 @@ export class Tooltip {
             this.tooltipElement.classList.remove('active');
         }
     }
+
+    delete()
+    {
+        if (this.tooltipElement)
+        {
+            this.tooltipElement.style.display = 'none';
+        }
+    }
 }

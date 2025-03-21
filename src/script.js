@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import globalData from './globalData.js'
 
-import {loadModel, mixers, updateInteractables, hideTooltip, showContainer} from './modelLoader.js'
+import {loadModel, mixers, updateInteractables, hideTooltip, showContainer, deleteTooltips} from './modelLoader.js'
 
 import Stats from 'three/addons/libs/stats.module.js';
 
@@ -19,139 +19,151 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 var mouse, raycaster;
 
-let container, stats;
+let container, stats, clock;
 let composer, outlinePass;
 
-
-
-
-// initialize the scene
-const scene = new THREE.Scene()
-//scene.fog = new THREE.Fog(0xa5a5a5, 0.5, 20);
-//scene.background = new THREE.Color(0xafafaf);
-
-
-
 const model = {}
-
-loadModel('/roomportfolio_opt.gltf', scene, model);
-
-mouse = new THREE.Vector2()
-raycaster = new THREE.Raycaster();
-
-
-
-// Add lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-const directionalLight = new THREE.DirectionalLight(0xffffff, .5);
-
-
-scene.add(ambientLight);
-scene.add(directionalLight);
-
-scene.background = new THREE.Color(0x141619)
-
-// initialize the camera
-const camera = new THREE.PerspectiveCamera(
-  75, 
-  window.innerWidth / window.innerHeight,
-  0.1,
-  30);
-
-camera.position.set(
-  3.803140345741882,
-  4.114402818533132,
-  2.0820341820698127
-);
-camera.lookAt(new THREE.Vector3(0,2,2))
+let camera, scene, renderer;
 const canvas = document.querySelector('canvas');
-// initialize the renderer
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-  antialias: true,
-})
-
-renderer.setPixelRatio( window.devicePixelRatio );
-
-// Initialize the controls
-//const controls = new OrbitControls(camera, renderer.domElement)
-//controls.enableDamping = true;
-
-camera.aspect = window.innerWidth / window.innerHeight;
-camera.updateProjectionMatrix();
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-renderer.domElement.addEventListener('click', onClick, false);
-renderer.domElement.addEventListener('mousemove', onHover, false);
-
-window.addEventListener('resize', () => {
-    resize();
-})
 
 
+let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+console.log(isMobile);
 
-// postprocessing
-
-const outlineParams = 
+function init()
 {
-  hiddenEdgeColor:  new THREE.Color("#ffffff")
-}
-
-
-composer = new EffectComposer( renderer );
-
-const renderPass = new RenderPass( scene, camera );
-composer.addPass( renderPass );
-
-outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-Object.assign(outlinePass, outlineParams);
-composer.addPass( outlinePass );
-
-let fxaaPass = new ShaderPass( FXAAShader );
-
-
-const outputPass = new OutputPass();
-composer.addPass( outputPass );
-
-const pixelRatio = renderer.getPixelRatio();
-globalData.camera = camera;
-globalData.canvas = canvas;
-globalData.outlinePass = outlinePass;
-globalData.pixelRatio = pixelRatio;
-
-fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * pixelRatio );
-fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * pixelRatio );
-
-composer.addPass(fxaaPass);
-
-
-
-// Add stats
-
-container = document.getElementById('info');
-stats = new Stats();
-stats.dom.style.top = '50%';
-//container.appendChild( stats.dom );
-
-
-const clock = new THREE.Clock();
-let previousTime = 0;
-
-const renderloop = () => {
-  const currentTime = clock.getElapsedTime();
-  const delta = currentTime - previousTime;
-     
-  //Physics
-  mixers.forEach((mixer) => mixer.update(delta));
-
-  stats.update();
-
   
-  previousTime = currentTime;
-  //controls.update()
-  renderer.render(scene, camera);
-  composer.render();
-  window.requestAnimationFrame(renderloop)
+    // initialize the scene
+    scene = new THREE.Scene()
+    //scene.fog = new THREE.Fog(0xa5a5a5, 0.5, 20);
+    //scene.background = new THREE.Color(0xafafaf);
+    
+    
+    
+    
+    loadModel('/roomportfolio_opt.gltf', scene, model);
+    
+
+    mouse = new THREE.Vector2()
+    raycaster = new THREE.Raycaster();
+    
+    
+    
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, .5);
+    
+    
+    scene.add(ambientLight);
+    scene.add(directionalLight);
+    
+    scene.background = new THREE.Color(0x141619)
+    
+    // initialize the camera
+    camera = new THREE.PerspectiveCamera(
+      75, 
+      window.innerWidth / window.innerHeight,
+      0.1,
+      30);
+    
+    camera.position.set(
+      3.803140345741882,
+      4.114402818533132,
+      2.0820341820698127
+    );
+    camera.lookAt(new THREE.Vector3(0,2,2))
+    // initialize the renderer
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+    })
+    
+    renderer.setPixelRatio( window.devicePixelRatio );
+    
+    // Initialize the controls
+    //const controls = new OrbitControls(camera, renderer.domElement)
+    //controls.enableDamping = true;
+    
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    renderer.domElement.addEventListener('click', onClick, false);
+    renderer.domElement.addEventListener('mousemove', onHover, false);
+    
+    window.addEventListener('resize', () => {
+        resize();
+    })
+    
+    
+    
+    // postprocessing
+    
+    const outlineParams = 
+    {
+      hiddenEdgeColor:  new THREE.Color("#ffffff")
+    }
+    
+    
+    composer = new EffectComposer( renderer );
+    
+    const renderPass = new RenderPass( scene, camera );
+    composer.addPass( renderPass );
+    
+    outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+    Object.assign(outlinePass, outlineParams);
+    composer.addPass( outlinePass );
+    
+    let fxaaPass = new ShaderPass( FXAAShader );
+    
+    
+    const outputPass = new OutputPass();
+    composer.addPass( outputPass );
+    
+    const pixelRatio = renderer.getPixelRatio();
+    globalData.camera = camera;
+    globalData.canvas = canvas;
+    globalData.outlinePass = outlinePass;
+    globalData.pixelRatio = pixelRatio;
+    
+    fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * pixelRatio );
+    fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * pixelRatio );
+    
+    composer.addPass(fxaaPass);
+    
+    
+    
+    // Add stats
+    
+    container = document.getElementById('info');
+    stats = new Stats();
+    stats.dom.style.top = '50%';
+    // container.appendChild( stats.dom );
+    
+    
+    clock = new THREE.Clock();
+  }
+  
+init();
+
+    
+let previousTime = 0;
+const renderloop = () => {
+
+    const currentTime = clock.getElapsedTime();
+    const delta = currentTime - previousTime;
+       
+    //Physics
+    mixers.forEach((mixer) => mixer.update(delta));
+  
+    
+    
+    previousTime = currentTime;
+    //controls.update()
+    stats.update();
+    renderer.render(scene, camera);
+    composer.render();
+    window.requestAnimationFrame(renderloop)
 }
 
 renderloop()
@@ -159,7 +171,9 @@ renderloop()
 
 function resize()
 {
+
   updateInteractables();
+  
 
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -250,3 +264,5 @@ const swiper = new Swiper('.slider-wrapper', {
   slidesPerView:'auto'
 
 });
+
+
